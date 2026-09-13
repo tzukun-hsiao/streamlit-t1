@@ -1,11 +1,11 @@
 import streamlit as st
 
 
-def hide_toolbar(key):
+def hide_toolbar(container_key: str):
     st.markdown(
         f"""
         <style>
-        .st-key-{key} [data-testid="stElementToolbar"] {{
+        .st-key-{container_key} [data-testid="stElementToolbar"] {{
             display: none;
         }}
         </style>

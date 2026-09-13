@@ -1,6 +1,7 @@
 # Import packages
 import streamlit as st
 import pandas as pd
+from assets.styling import
 
 # Add a title
 st.title('This is a title')
