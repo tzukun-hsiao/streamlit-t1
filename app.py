@@ -4,7 +4,7 @@ import pandas as pd
 from assets.styling import hide_toolbar
 
 # Add a title
-st.title('This is a title')
+st.title('Text formatting and working with CSV file')
 
 # Markdown for text formatting
 md_heading = """
