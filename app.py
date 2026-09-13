@@ -1,7 +1,7 @@
 # Import packages
 import streamlit as st
 import pandas as pd
-from assets.styling import
+from assets.styling import hide_toolbar
 
 # Add a title
 st.title('This is a title')
@@ -31,6 +31,12 @@ This is a sentence.
 """
 st.markdown(md_txt)
 
+my_height = 172
+md_txt_height = f"""
+My height is {my_height} cm.
+"""
+st.markdown(md_txt_height)
+
 # insert an image
 # st.image('assets/pikachu.jpg', width=300)
 
@@ -51,20 +57,34 @@ st.metric('Score:', 97, border=True)
 # Read data
 df = pd.read_csv('assets/penguins.csv')
 
-def hide_toolbar(key):
-    st.markdown(
-        f"""
-        <style>
-        .st-key-{key} [data-testid="stElementToolbar"] {{
-            display: none;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
 with st.container(key='no_download'):
-    hide_toolbar(key='no_download')
+    hide_toolbar(container_key='no_download')
     st.dataframe(df)
+
+df_g = df.groupby(['species'])[['species']].count()
+st.dataframe(df_g)
+
+for i, row in df_g.iterrows():
+    st.write(row.name, row['species'])
+
+# Exercise
+# Create 3 columns. 
+# First column display total number of peguins using metric
+# Second column display a dataframe showing the nunmbers of MALE and FEMALE penguins.
+# Third column display a list showing the numbers of MALE and FEMALE penguise.
+
+df_g2 = df.groupby(['sex'])[['sex']].count()
+total_penguine =df.shape[0]
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.metric('Total number of penguins:', total_penguine)
+with col2:
+    st.dataframe(df_g2)
+with col3:
+    for i, row in df_g2.iterrows():
+        sex = row.name
+        sex_count = row['sex']
+        md_txt = f'- {sex}: {sex_count}'
+        st.markdown(md_txt)
 
 
